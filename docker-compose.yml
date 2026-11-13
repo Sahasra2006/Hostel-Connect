@@ -1,0 +1,60 @@
+services:
+  # Database Service (Still kept for local use if needed, but backend connects to cloud)
+  mongo:
+    image: mongo:latest
+    container_name: hostelconnect-mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+    networks:
+      - hostelconnect-network
+
+  # Backend Service
+  backend:
+    build: ./backend
+    container_name: hostelconnect-backend
+    ports:
+      - "5000:5000"
+    environment:
+      - MONGO_URI=${MONGO_URI}
+      - JWT_SECRET=${JWT_SECRET}
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
+      - PROMETHEUS_URL=http://hostelconnect-prometheus:9090
+    depends_on:
+      - mongo
+    networks:
+      - hostelconnect-network
+
+  # Frontend Service
+  frontend:
+    build: 
+      context: ./frontend
+      args:
+        - VITE_API_URL=${VITE_API_URL}
+        - VITE_SOCKET_URL=${VITE_SOCKET_URL}
+    container_name: hostelconnect-frontend
+    ports:
+      - "5173:80"
+    depends_on:
+      - backend
+    networks:
+      - hostelconnect-network
+
+  # Prometheus — scrapes /metrics from backend every 15s
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: hostelconnect-prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./devsecops/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    networks:
+      - hostelconnect-network
+
+networks:
+  hostelconnect-network:
+    driver: bridge
+
+volumes:
+  mongo-data:

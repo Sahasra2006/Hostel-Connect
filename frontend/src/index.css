@@ -1,0 +1,475 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+:root {
+  /* LIGHT THEME (Default) */
+  --bg-main: #fcfbf7;
+  --bg-secondary: #ffffff;
+  --bg-accent: #fefce8;
+  --text-primary: #1c1917;
+  --text-secondary: #44403c;
+  --text-muted: #78716c;
+  --brand-primary: #ca8a04;
+  --brand-primary-hover: #a16207;
+  --brand-glow: rgba(202, 138, 4, 0.1);
+  --border-subtle: #f5f5f4;
+  --card-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05), 0 2px 4px -2px rgb(0 0 0 / 0.05);
+  --card-shadow-lg: 0 20px 25px -5px rgb(0 0 0 / 0.05), 0 8px 10px -6px rgb(0 0 0 / 0.05);
+  --glass-bg: rgba(255, 255, 255, 0.8);
+  --glass-border: rgba(255, 255, 255, 0.5);
+  --success: #10b981;
+  --warning: #eab308;
+  --danger: #ef4444;
+  --transition-speed: 0.3s;
+}
+
+[data-theme='dark'] {
+  /* DARK THEME */
+  --bg-main: #0c0a09;
+  --bg-secondary: #1c1917;
+  --bg-accent: #292524;
+  --text-primary: #fafaf9;
+  --text-secondary: #d6d3d1;
+  --text-muted: #a8a29e;
+  --brand-primary: #facc15;
+  --brand-primary-hover: #fde047;
+  --brand-glow: rgba(250, 204, 21, 0.15);
+  --border-subtle: #292524;
+  --card-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.3);
+  --card-shadow-lg: 0 20px 25px -5px rgb(0 0 0 / 0.4);
+  --glass-bg: rgba(28, 25, 23, 0.8);
+  --glass-border: rgba(41, 37, 36, 0.5);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', -apple-system, sans-serif;
+}
+
+body {
+  background-color: var(--bg-main);
+  color: var(--text-primary);
+  min-height: 100vh;
+  transition: background-color var(--transition-speed), color var(--transition-speed);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Scrollbar Refinement */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: var(--bg-main); }
+::-webkit-scrollbar-thumb { background: var(--border-subtle); border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
+
+/* Typography */
+h1, h2, h3, h4 {
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  color: var(--text-primary);
+}
+
+/* Professional Layout Components */
+.app-container {
+  display: flex;
+  min-height: 100vh;
+}
+
+.sidebar {
+  width: 280px;
+  background: var(--bg-secondary);
+  border-right: 1px solid var(--border-subtle);
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  height: 100vh;
+  z-index: 100;
+  transition: background-color var(--transition-speed);
+}
+
+.main-wrapper {
+  flex: 1;
+  margin-left: 280px;
+  display: flex;
+  flex-direction: column;
+}
+
+.top-nav {
+  height: 72px;
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0 2rem;
+  position: sticky;
+  top: 0;
+  z-index: 90;
+}
+
+.content-area {
+  padding: 2.5rem;
+  max-width: 1280px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* Modern Card Style */
+.card {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-subtle);
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: var(--card-shadow);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color var(--transition-speed);
+}
+
+.card:hover {
+  box-shadow: var(--card-shadow-lg);
+}
+
+/* Button System */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 0.625rem 1.25rem;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 0.9375rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+  outline: none;
+}
+
+.btn-primary {
+  background: var(--brand-primary);
+  color: #ffffff;
+}
+
+.btn-primary:hover {
+  background: var(--brand-primary-hover);
+  transform: translateY(-1px);
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--text-secondary);
+}
+
+.btn-ghost:hover {
+  background: var(--bg-accent);
+  color: var(--text-primary);
+}
+
+/* Input Fields */
+.input-field {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background: var(--bg-accent);
+  border: 1px solid var(--border-subtle);
+  border-radius: 10px;
+  color: var(--text-primary);
+  font-size: 0.9375rem;
+  transition: all 0.2s ease;
+  outline: none;
+}
+
+.input-field:focus {
+  border-color: var(--brand-primary);
+  box-shadow: 0 0 0 4px var(--brand-glow);
+}
+
+/* Utility Classes */
+.badge {
+  padding: 4px 10px;
+  border-radius: 100px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.badge-blue { background: #fef9c3; color: #854d0e; }
+.badge-green { background: #d1fae5; color: #065f46; }
+
+/* Animations */
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-up {
+  animation: slideUp 0.4s ease-out forwards;
+}
+
+/* Theme Toggle Custom Style */
+.theme-toggle {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  background: var(--bg-accent);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-primary);
+  transition: all 0.2s ease;
+}
+
+/* Custom Animations & Backgrounds */
+.floating-elements {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.float-circle {
+  position: absolute;
+  background: var(--brand-primary);
+  border-radius: 50%;
+  filter: blur(80px);
+  animation: float 20s infinite ease-in-out;
+}
+
+@keyframes float {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(30px, -50px) scale(1.1); }
+  66% { transform: translate(-20px, 20px) scale(0.9); }
+}
+
+@keyframes blink {
+  50% { border-color: transparent; }
+}
+
+.theme-toggle:hover {
+  background: var(--border-subtle);
+}
+
+/* ==========================================================================
+   PORTAL-SPECIFIC THEMING & OVERRIDES
+   ========================================================================== */
+
+/* 1. STUDENT PORTAL: Glassmorphic Community Social Theme */
+.student-portal {
+  --bg-main: #fdfdfa;
+  --bg-secondary: rgba(255, 255, 255, 0.85);
+  --bg-accent: rgba(254, 252, 232, 0.6);
+  --text-primary: #1c1917;
+  --text-secondary: #44403c;
+  --text-muted: #78716c;
+  --brand-primary: #ca8a04;
+  --brand-glow: rgba(202, 138, 4, 0.1);
+  --border-subtle: rgba(0, 0, 0, 0.05);
+  --success: #10b981;
+  --warning: #eab308;
+  --danger: #ef4444;
+}
+
+[data-theme='dark'] .student-portal {
+  --bg-main: #0c0a09;
+  --bg-secondary: rgba(28, 25, 23, 0.7);
+  --bg-accent: rgba(41, 37, 36, 0.5);
+  --text-primary: #fafaf9;
+  --text-secondary: #d6d3d1;
+  --text-muted: #a8a29e;
+  --brand-primary: #facc15;
+  --brand-glow: rgba(250, 204, 21, 0.15);
+  --border-subtle: rgba(255, 255, 255, 0.08);
+}
+
+.student-portal .sidebar {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(20px);
+  border-right: 1px solid var(--border-subtle);
+}
+
+[data-theme='dark'] .student-portal .sidebar {
+  background: rgba(28, 25, 23, 0.85);
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.student-portal .card {
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(202, 138, 4, 0.08);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.05);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+[data-theme='dark'] .student-portal .card {
+  background: rgba(28, 25, 23, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}
+
+.student-portal .card:hover {
+  transform: translateY(-4px) scale(1.01);
+  border-color: rgba(202, 138, 4, 0.3);
+  box-shadow: 0 12px 40px 0 rgba(202, 138, 4, 0.15);
+}
+
+[data-theme='dark'] .student-portal .card:hover {
+  border-color: rgba(250, 204, 21, 0.3);
+  box-shadow: 0 12px 40px 0 rgba(250, 204, 21, 0.2);
+}
+
+.student-portal .btn {
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  font-weight: 700;
+}
+
+.student-portal .btn-primary {
+  background: linear-gradient(135deg, #eab308 0%, #ca8a04 100%);
+  color: #1c1917;
+  box-shadow: 0 4px 20px rgba(202, 138, 4, 0.25);
+}
+
+.student-portal .btn-primary:hover {
+  background: linear-gradient(135deg, #facc15 0%, #eab308 100%);
+  box-shadow: 0 6px 24px rgba(234, 179, 8, 0.4);
+  transform: translateY(-2px);
+}
+
+.student-portal .input-field {
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-primary);
+}
+
+[data-theme='dark'] .student-portal .input-field {
+  background: rgba(12, 10, 9, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.student-portal .input-field:focus {
+  border-color: var(--brand-primary);
+  box-shadow: 0 0 15px var(--brand-glow);
+}
+
+/* 2. ADMIN PORTAL: Unified Theme with Student Portal */
+.admin-portal {
+  --bg-main: #fdfdfa;
+  --bg-secondary: rgba(255, 255, 255, 0.85);
+  --bg-accent: rgba(254, 252, 232, 0.6);
+  --text-primary: #1c1917;
+  --text-secondary: #44403c;
+  --text-muted: #78716c;
+  --brand-primary: #ca8a04;
+  --brand-glow: rgba(202, 138, 4, 0.1);
+  --border-subtle: rgba(0, 0, 0, 0.05);
+  --success: #10b981;
+  --warning: #eab308;
+  --danger: #ef4444;
+}
+
+[data-theme='dark'] .admin-portal {
+  --bg-main: #0c0a09;
+  --bg-secondary: rgba(28, 25, 23, 0.7);
+  --bg-accent: rgba(41, 37, 36, 0.5);
+  --text-primary: #fafaf9;
+  --text-secondary: #d6d3d1;
+  --text-muted: #a8a29e;
+  --brand-primary: #facc15;
+  --brand-glow: rgba(250, 204, 21, 0.15);
+  --border-subtle: rgba(255, 255, 255, 0.08);
+}
+
+.admin-portal .sidebar {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(20px);
+  border-right: 1px solid var(--border-subtle);
+}
+
+[data-theme='dark'] .admin-portal .sidebar {
+  background: rgba(28, 25, 23, 0.85);
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.admin-portal .card {
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(202, 138, 4, 0.08);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.05);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+[data-theme='dark'] .admin-portal .card {
+  background: rgba(28, 25, 23, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}
+
+.admin-portal .card:hover {
+  transform: translateY(-4px) scale(1.01);
+  border-color: rgba(202, 138, 4, 0.3);
+  box-shadow: 0 12px 40px 0 rgba(202, 138, 4, 0.15);
+}
+
+[data-theme='dark'] .admin-portal .card:hover {
+  border-color: rgba(250, 204, 21, 0.3);
+  box-shadow: 0 12px 40px 0 rgba(250, 204, 21, 0.2);
+}
+
+.admin-portal .btn {
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  font-weight: 700;
+}
+
+.admin-portal .btn-primary {
+  background: linear-gradient(135deg, #eab308 0%, #ca8a04 100%);
+  color: #1c1917;
+  box-shadow: 0 4px 20px rgba(202, 138, 4, 0.25);
+}
+
+.admin-portal .btn-primary:hover {
+  background: linear-gradient(135deg, #facc15 0%, #eab308 100%);
+  box-shadow: 0 6px 24px rgba(234, 179, 8, 0.4);
+  transform: translateY(-2px);
+}
+
+.admin-portal .input-field {
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-primary);
+}
+
+[data-theme='dark'] .admin-portal .input-field {
+  background: rgba(12, 10, 9, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.admin-portal .input-field:focus {
+  border-color: var(--brand-primary);
+  box-shadow: 0 0 15px var(--brand-glow);
+}
+
+/* Custom telemetry pulse animation */
+@keyframes cyberPulse {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+
+.pulse-indicator {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+  animation: cyberPulse 1.5s infinite ease-in-out;
+}
+

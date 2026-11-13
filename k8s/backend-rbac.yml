@@ -1,0 +1,21 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: backend-k8s-reader
+rules:
+  - apiGroups: [""]
+    resources: ["pods", "pods/log", "nodes", "services"]
+    verbs: ["get", "list"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: backend-k8s-reader-binding
+subjects:
+  - kind: ServiceAccount
+    name: default
+    namespace: hostel-connect
+roleRef:
+  kind: ClusterRole
+  name: backend-k8s-reader
+  apiGroup: rbac.authorization.k8s.io

@@ -1,0 +1,82 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+  namespace: hostel-connect
+  labels:
+    app: backend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      containers:
+      - name: backend
+        image: komalpreet1703/hostel-connect-backend:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 5000
+        env:
+        - name: PORT
+          value: "5000"
+        - name: MONGO_URI
+          valueFrom:
+            secretKeyRef:
+              name: mongodb-atlas-secret
+              key: MONGO_URI
+        - name: JWT_SECRET
+          value: "superSecretSecurityTokenKeyForJWTVerification"
+        - name: GEMINI_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: gemini-secret
+              key: GEMINI_API_KEY
+        - name: JENKINS_URL
+          valueFrom:
+            configMapKeyRef:
+              name: jenkins-config
+              key: JENKINS_URL
+        - name: JENKINS_USER
+          valueFrom:
+            configMapKeyRef:
+              name: jenkins-config
+              key: JENKINS_USER
+        - name: JENKINS_JOB
+          valueFrom:
+            configMapKeyRef:
+              name: jenkins-config
+              key: JENKINS_JOB
+        - name: PROMETHEUS_URL
+          valueFrom:
+            configMapKeyRef:
+              name: jenkins-config
+              key: PROMETHEUS_URL
+        - name: JENKINS_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: jenkins-secret
+              key: JENKINS_TOKEN
+        resources:
+          limits:
+            cpu: "500m"
+            memory: "512Mi"
+          requests:
+            cpu: "250m"
+            memory: "256Mi"
+        livenessProbe:
+          httpGet:
+            path: /api/health
+            port: 5000
+          initialDelaySeconds: 15
+          periodSeconds: 20
+        readinessProbe:
+          httpGet:
+            path: /api/health
+            port: 5000
+          initialDelaySeconds: 10
+          periodSeconds: 10
