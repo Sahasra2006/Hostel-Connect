@@ -92,10 +92,10 @@ Create a `.env` file in the root directory to orchestrate the backend and fronte
 
 ```env
 # MongoDB Connection String (Cloud URI or Local Database)
-MONGO_URI=mongodb+srv://your-username:your-password@cluster.mongodb.net/hostelconnect?retryWrites=true&w=majority
+MONGO_URI=your_mongodb_connection_string
 
 # JSON Web Token Secret
-JWT_SECRET=superSecretSecurityTokenKeyForJWTVerification
+JWT_SECRET=your_random_secret_key
 
 # API and Socket Connection Endpoints (Ensure ports match docker-compose configuration)
 VITE_API_URL=http://localhost:5000/api
